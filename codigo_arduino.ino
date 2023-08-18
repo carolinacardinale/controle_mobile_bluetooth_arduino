@@ -1,52 +1,46 @@
-/* Projeto Curto Circuito – HC05: Controle Mobile */
+#include <SoftwareSerial.h> 
 
-/* Biblioteca */
-#include <SoftwareSerial.h> /* Comandos Seriais */
+SoftwareSerial HC05(10, 11); 
 
-SoftwareSerial HC05(10, 11); /* TX-RX */
+int state = 0;  
+int state2 = 0; 
+int state3 = 0;
 
-
-/* Variáveis Lógicas ON-OFF */
-int state = 0;  /*Controla o status do LED Verde */
-int state2 = 0; /*Controla o status do LED Vermelho */
-int state3 = 0; /* Controla o status do LED Azul */
-
-/* Define a pinagem do LED */
 #define azul 4
 #define verde 3
 #define vermelho 2
 
 void setup()
 {
-  Serial.begin(9600);        /* Taxa de transmissão na serial */
-  HC05.begin(9600);        /* Taxa de transmissão do Módulo */
+  Serial.begin(9600);        
+  HC05.begin(9600);        
 
-  pinMode(verde, OUTPUT);      /* Declara verde como OUTPUT */
-  pinMode(azul, OUTPUT);         /* Declara azul como OUTPUT */
-  pinMode(vermelho, OUTPUT); /* Declara vermelho como OUTPUT */
+  pinMode(verde, OUTPUT);      
+  pinMode(azul, OUTPUT);         
+  pinMode(vermelho, OUTPUT); 
 
 }
 void loop()
 {
-  /* Armazena os valores de leitura de HC05 na variável readBluetooth */
+  
   int readBluetooth = HC05.read();
 
   switch (readBluetooth)
-  { /* De acordo com o valor armazenado em readBluetooth */
+  { 
   
-    case 'a': /* Caso receba o caractere 'a'*/
-      state = !state; /* substitui o valor de state entre 0 e 1 */
-      digitalWrite(verde, state); /* state aciona ou desliga o LED */
-      break; /* Fim do caso 'a' */
+    case 'a': 
+      state = !state; 
+      digitalWrite(verde, state); 
+      break;
 
-    case 'b': /* Caso receba o caractere 'b' */
-      state2 = !state2; /* substitui o valor de state entre 0 e 1 */
-      digitalWrite(vermelho, state2);/* state aciona ou desliga o LED */
-      break; /* Fim do caso 'b'*/
+    case 'b':
+      state2 = !state2; 
+      digitalWrite(vermelho, state2);
+      break; 
 
-    case 'c': /* Caso receba o caractere 'c' */
-      state3 = !state3;/* substitui o valor de state entre 0 e 1 */
-      digitalWrite(azul, state3);/* state aciona ou desliga o LED */
-      break; /* Fim do caso 'c' */
+    case 'c': 
+      state3 = !state3;
+      digitalWrite(azul, state3);
+      break;
   }
 }
